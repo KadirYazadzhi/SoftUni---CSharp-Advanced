@@ -1,60 +1,77 @@
-using System;
-using System.Linq;
+﻿using System.Text;
 
 namespace CarManufacturer {
-    class Car {
+    public class Car {
         private string make;
         private string model;
         private int year;
         private double fuelQuantity;
         private double fuelConsumption;
-        private Tire[] tires;
         private Engine engine;
-        
-        public string Make { get { return make; } set { make = value; } }
-        public string Model { get { return model; } set { model = value; } }
-        public int Year { get { return year; } set { year = value; } }
-        public double FuelQuantity { get { return fuelQuantity; } set { fuelQuantity = value; } }
-        public double FuelConsumption { get { return fuelConsumption; } set { fuelConsumption = value; } }
-        public Tire[] Tires { get { return tires; } set { tires = value; } }
-        public Engine Engine { get { return engine; } set { engine = value; } }
-        
+        private Tire[] tire;
+
         public Car() {
-            this.Make = "VW";
-            this.Model = "Golf";
-            this.Year = 2025;
-            this.FuelQuantity = 200;
-            this.FuelConsumption = 10;
+            Make = "VW";
+            Model = "Golf";
+            Year = 2025;
+            FuelQuantity = 200;
+            FuelConsumption = 10;
         }
-        public Car(string make, string model, int year) : this() {
+
+        public Car(string make, string model, int year)
+            : this() {
             this.Make = make;
             this.Model = model;
             this.Year = year;
         }
 
-        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption) : this(make, model,
-            year) {
+        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption)
+            : this(make, model, year) {
             this.FuelQuantity = fuelQuantity;
             this.FuelConsumption = fuelConsumption;
         }
 
-        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption, Engine engine, Tire[] tires) :
-            this(make, model, year, fuelQuantity, fuelConsumption) {
+        public Car(string make, string model, int year, double fuelQuantity, double fuelConsumption, Engine engine, Tire[] tires)
+            : this(make, model, year, fuelQuantity, fuelConsumption) {
             this.Engine = engine;
             this.Tires = tires;
         }
-        
+
+        public string Make { get; set; }
+
+        public string Model { get; set; }
+
+        public int Year { get; set; }
+
+        public double FuelQuantity { get; set; }
+
+        public double FuelConsumption { get; set; }
+
+        public Engine Engine { get; set; }
+
+        public Tire[] Tires { get; set; }
+
         public void Drive(double distance) {
-            if (fuelQuantity - distance * fuelConsumption > 0) return;
-            
-            Console.WriteLine("Not enough fuel to perform this trip!");
+            bool checkFuel = FuelQuantity - (distance / 100 * FuelConsumption) > 0;
+
+            if (checkFuel) {
+                FuelQuantity -= distance / 100 * FuelConsumption;
+            }
+            else {
+                System.Console.WriteLine("Not enough fuel to perform this trip!");
+            }
         }
 
-        public string WhoAmI() {
-            return $"Make: {this.Make}\n" +
-                   $"Model: {this.Model}\n" +
-                   $"Year: {this.Year}\n" +
-                   $"Fuel: {this.FuelQuantity:F2}";
+        public string CarInfo() {
+            StringBuilder result = new StringBuilder();
+
+            result.AppendLine($"Make: {this.Make}");
+            result.AppendLine($"Model: {this.Model}");
+            result.AppendLine($"Year: {this.Year}");
+            result.AppendLine($"HorsePowers: {this.Engine.HorsePower}");
+            result.AppendLine($"FuelQuantity: {this.FuelQuantity}");
+
+            return result.ToString().TrimEnd();
         }
     }
 }
