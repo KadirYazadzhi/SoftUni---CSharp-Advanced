@@ -68,7 +68,7 @@ This course is ideal for students comfortable with:
 
 ### Exam Details
 
-- **Date**: 17 February 2025  
+- **Date**: 15 February 2025  
 - **Format**:  
   - Practical: Solve algorithmic tasks.  
   - Theoretical: Answer a test.  
